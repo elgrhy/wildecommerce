@@ -1,3 +1,4 @@
+import 'package:commerce/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -5,7 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
 
   @override
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({Key? key}) : super(key: key);
 
 
   @override
@@ -31,54 +32,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int currentIndex = 0;
-  String address = 'add adress here';
-  final TextEditingController _addressController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _addressController.text = address;
-  }
 
   @override
   Widget build(BuildContext context) {
     const color2 = Color.fromARGB(182, 0, 0, 0);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Column(
-          children: [
-            Text(
-              'Delivery to'.toUpperCase(),
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: Colors.green),
-            ),
-            Text(
-              _addressController.text,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: Colors.black),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              _showAddressDialog();
-            },
-            child: const Text(
-              'Change',
-              style: TextStyle(color: Colors.green),
-            ),
-          ),
-          const Padding(padding: EdgeInsets.all(8)),
-        ],
-      ),
+
+      body: const HomePage(),
+     
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: true,
@@ -119,50 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
       ),
-    );
-  }
-
-  void _showAddressDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        final TextEditingController newAddressController =
-            TextEditingController(text: address);
-        const inputDecoration = InputDecoration(
-              labelText: "New Address",
-              hintText: "Apartment No., Building Name, Area, City, Country",
-            );
-        return AlertDialog(
-          title: const Text("Change Address"),
-          content: TextFormField(
-            controller: newAddressController,
-            decoration: inputDecoration,
-            onSaved: (value) {
-              setState(() {
-                newAddressController.text = value!;
-              });
-            },
-          ),
-          actions: [
-            TextButton(
-              child: const Text("Cancel"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text("Save"),
-              onPressed: () {
-                setState(() {
-                  address = newAddressController.text;
-                  _addressController.text = address;
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 }
